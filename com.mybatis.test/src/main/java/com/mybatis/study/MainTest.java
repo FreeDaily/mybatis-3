@@ -7,8 +7,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
@@ -23,9 +21,16 @@ public class MainTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
         try (SqlSession session = sqlSessionFactory.openSession()) {
+
+            Object selectOne = session.selectOne("com.mybatis.study.biz.UserDao.findByName", "LI");
+            log.info("selectOne:{}", selectOne);
+
             UserDao mapper = session.getMapper(UserDao.class);
             User user = mapper.findById(1L);
             log.info("{}", user);
+
+            User li = mapper.findByName("LI");
+            log.info("name :{}", li);
         }
     }
 }
