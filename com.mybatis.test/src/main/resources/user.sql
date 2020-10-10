@@ -37,3 +37,10 @@ INSERT INTO `user` (name) VALUES ('ZHANGSAN');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `sex` enum('1','2','0') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=armscii8;
