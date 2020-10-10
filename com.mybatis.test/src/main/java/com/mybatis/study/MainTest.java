@@ -1,5 +1,9 @@
 package com.mybatis.study;
 
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.mybatis.study.biz.Sex;
 import com.mybatis.study.biz.User;
 import com.mybatis.study.biz.UserDao;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +26,16 @@ public class MainTest {
 
         try (SqlSession session = sqlSessionFactory.openSession()) {
 
-            Object selectOne = session.selectOne("com.mybatis.study.biz.UserDao.findByName", "LI");
-            log.info("selectOne:{}", selectOne);
-
             UserDao mapper = session.getMapper(UserDao.class);
+            PageHelper.startPage(1, 10);
+            Page<User> users = mapper.find(1L);
+            log.info("{}", JSON.toJSONString(users));
+
             User user = mapper.findById(1L);
             log.info("{}", user);
 
-            User li = mapper.findByName("LI");
-            log.info("name :{}", li);
+            Object selectOne = session.selectOne("com.mybatis.study.biz.UserDao.findByName", "LI");
+            log.info("selectOne:{}", selectOne);
         }
     }
 }
